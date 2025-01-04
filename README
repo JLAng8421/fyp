@@ -1,0 +1,13 @@
+To run this system, please ensures that the frontend, api and small language model is running
+
+To run frontend, enter following command in terminal
+1. cd .\fyp\
+2. npm run dev
+
+To run api, enter following command in terminal
+1. cd .\api\
+2. dotnet run
+
+To run small language model
+1. run "slm_with_fastapi.ipynb" in google colab (Please ensure that change runtime type to T4 GPU)
+2. copy the ngrok link appeared at the final terminal and paste in the "\fyp\src\app\ask\page.tsx" file at row 42
