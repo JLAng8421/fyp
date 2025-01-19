@@ -1,7 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+// Programmer Name  : Ang Jia Liang TP068299
+// Program Name     : UserController.cs
+// Description      : The api controller for user
+// First Written on : 10-Dec-2024
+// Edited on        : 20-Dec-2024
+
 using api.Data;
 using api.Dtos.User;
 using api.Mappers;
@@ -24,7 +26,7 @@ namespace api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var users = _context.Users.ToList().Select(s => s.ToUserDto());
+            var users = _context.Users.ToList().Select(s => s.ToUserDto()); // To retrieve the data from db and convert it to list and filter with Dtos
 
             return Ok(users);
         }
@@ -34,9 +36,9 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById([FromRoute] int id)
         {
-            var user = _context.Users.Find(id);
+            var user = _context.Users.Find(id); // To search for a data with id in db
 
-            if (user == null)
+            if (user == null) // return not found if the there is no result
             {
                 return NotFound();
             }
@@ -49,10 +51,10 @@ namespace api.Controllers
         [HttpPost]
         public IActionResult CreateUser([FromBody] CreateUserRequestDto userDto)
         {
-            var userModel = userDto.ToCreateUserRequestDto();
-            _context.Users.Add(userModel);
-            _context.SaveChanges();
-            return CreatedAtAction(nameof(GetById), new {id = userModel.UserID}, userModel.ToUserDto());
+            var userModel = userDto.ToCreateUserRequestDto(); // convert the input into preset dtos
+            _context.Users.Add(userModel); // add the input to the db
+            _context.SaveChanges(); // save the changes
+            return CreatedAtAction(nameof(GetById), new {id = userModel.UserID}, userModel.ToUserDto()); // return the saved data
         }
 
         // To update a user's info
@@ -61,19 +63,19 @@ namespace api.Controllers
         [Route("{id}")]
         public IActionResult UpdateUserInfo([FromRoute] int id, [FromBody] UpdateUserRequestDto updateDto)
         {
-            var userModel = _context.Users.FirstOrDefault(x => x.UserID == id);
+            var userModel = _context.Users.FirstOrDefault(x => x.UserID == id); // To search for a data with id in db
 
-            if (userModel == null)
+            if (userModel == null) // return not found if the there is no result
             {
                 return NotFound();
             }
 
-            userModel.Username = updateDto.Username;
-            userModel.ContactNumber = updateDto.ContactNumber;
-            userModel.Email = updateDto.Email;
-            userModel.Password = updateDto.Password;
+            userModel.Username = updateDto.Username; // update the data
+            userModel.ContactNumber = updateDto.ContactNumber; // update the data
+            userModel.Email = updateDto.Email; // update the data
+            userModel.Password = updateDto.Password; // update the data
 
-            _context.SaveChanges();
+            _context.SaveChanges(); // save the changes
 
             return Ok(userModel.ToUserDto());
         }
@@ -84,15 +86,15 @@ namespace api.Controllers
         [Route("{id}")]
         public IActionResult DeleteUser([FromRoute] int id)
         {
-            var user = _context.Users.FirstOrDefault(x => x.UserID == id);
+            var user = _context.Users.FirstOrDefault(x => x.UserID == id); // To search for a data with id in db
 
-            if (user == null)
+            if (user == null)  // return not found if the there is no result
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
-            _context.SaveChanges();
+            _context.Users.Remove(user); // delete the selected data
+            _context.SaveChanges(); // save the changes
             
             return NoContent();
         } 

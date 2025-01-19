@@ -1,7 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+// Programmer Name  : Ang Jia Liang TP068299
+// Program Name     : LibraryController.cs
+// Description      : The api controller for library
+// First Written on : 10-Dec-2024
+// Edited on        : 22-Dec-2024
+
 using api.Data;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,7 +24,7 @@ namespace api.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var librarys = _context.Library.ToList();
+            var librarys = _context.Library.ToList(); // To retrieve the library data from db and convert it to list
 
             return Ok(librarys);
         }
@@ -32,9 +34,9 @@ namespace api.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById([FromRoute] int id)
         {
-            var library = _context.Library.Find(id);
+            var library = _context.Library.Find(id); // To search for a data with id in db
 
-            if (library == null)
+            if (library == null) // return not found if the there is no result
             {
                 return NotFound();
             }
